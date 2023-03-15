@@ -196,8 +196,9 @@ module Bundler
         message = "Installing #{version_message(spec, options[:previous_spec])}"
         message += " with native extensions" if spec.extensions.any?
         Bundler.ui.confirm message
-
+        start_time = Time.now
         installed_spec = installer.install
+        Bundler.ui.confirm "Installed  #{spec.name} #{spec.version} #{(Time.now - start_time).round(2)}sec"
 
         spec.full_gem_path = installed_spec.full_gem_path
         spec.loaded_from = installed_spec.loaded_from
